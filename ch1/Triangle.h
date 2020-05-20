@@ -10,6 +10,30 @@ using glm::vec3;
 #include "ShaderUtil.h"
 
 
+using namespace std;
+
+string vertexShader = R"(
+#version 310 es
+layout (location=0) in highp vec3 VertexPosition;
+layout (location=1) in highp vec3 VertexColor;
+uniform mat4 RotationMatrix;
+out vec3 Color;
+void main()
+{
+	Color = VertexColor;
+	gl_Position = RotationMatrix*vec4(VertexPosition,1.0);
+}
+)";
+
+string fragmentShader = R"(
+#version 310 es
+in highp vec3 Color;
+out highp vec4 FragColor;
+void main() {
+	FragColor = vec4(Color, 1.0);
+}
+)";
+
 class Triangle
 {
 public:
@@ -79,9 +103,9 @@ public:
     void initShader()
     {
         //加载顶点着色器的脚本内容
-        mVertexShader = ShaderUtil::loadFromAssetsFile("vertex.sh");
+        mVertexShader = vertexShader;
         //加载片元着色器的脚本内容
-        mFragmentShader = ShaderUtil::loadFromAssetsFile("frag.sh");
+        mFragmentShader = fragmentShader;
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil::createProgram(mVertexShader, mFragmentShader);
         
