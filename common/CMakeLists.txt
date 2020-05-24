@@ -1,6 +1,8 @@
 set ( common_src esUtil.cpp
 				 esUtil_win32.cpp
-				 ShaderUtil.cpp)
+				 ShaderUtil.cpp
+				 vbotorus.cpp
+				 glslprogram.cpp)
 
 
 
